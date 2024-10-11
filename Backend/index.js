@@ -39,13 +39,9 @@ db.connect((err) => {
     console.log('Connected to the MySQL database');
 });
 
-// db.connect((err) =>{
-//     if (err) throw err;
-//     console.log('Connected successfully')
-// });
 
 //user registration
-// Assuming you have Express set up
+
 app.post('/register', (req, res) => {
     const { username, password } = req.body; // Get data from the form
     
@@ -64,15 +60,6 @@ app.post('/register', (req, res) => {
         res.send('User registered successfully!');
     });
 });
-
-// app.post('/register',(req, res) => {
-//     const {username, password} =req.body;
-//     const query = "INSERT INTO users (username, password) VALUES (?,?)";
-//     db.query(query, [username, password], (err, result) => {
-//         if (err) throw err;
-//         res.send('User registered successfully');
-//     });
-// });
 
 //event creation
 app.post('/create-event', (req,res) => {
