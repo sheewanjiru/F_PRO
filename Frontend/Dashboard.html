@@ -1,0 +1,117 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        #dashboard {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #0056b3;
+        }
+        .event-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .event-list li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #e0f7fa;
+            border: 1px solid #b2ebf2;
+            border-radius: 5px;
+        }
+        #create-event {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="dashboard">
+        <h1>Welcome to Your Dashboard, <span id="username"></span>!</h1>
+
+        <!-- Upcoming Events Section -->
+        <h2>Your Upcoming Events</h2>
+        <ul class="event-list" id="upcoming-events">
+            <!-- Events will be dynamically loaded here -->
+        </ul>
+
+        <!-- Button to Create New Event -->
+        <a href="/create-event" id="create-event">Create New Event</a>
+
+        <!-- Link to other pages (profile, logout, etc.) -->
+        <nav>
+            <a href="/profile">Go to Profile</a> | 
+            <a href="/logout">Logout</a>
+        </nav>
+    </div>
+
+    <script>
+        // Run this when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const username = localStorage.getItem('username') || 'User'; 
+    document.getElementById('username').textContent = username;
+
+    // Fetch upcoming events
+    fetchUpcomingEvents();
+});
+
+// Function to fetch and display events
+async function fetchUpcomingEvents() {
+    try {
+        const response = await fetch('http://localhost:5000/user-events');
+        const events = await response.json();
+        
+        const eventList = document.getElementById('upcoming-events');
+        eventList.innerHTML = '';  // Clear any existing events
+
+        // Check if there are events and display them
+        if (events.length === 0) {
+            eventList.innerHTML = '<li>No upcoming events.</li>';
+        } else {
+            events.forEach(event => {
+                const eventItem = document.createElement('li');
+                eventItem.textContent = `${event.name} - ${event.date}`;
+                eventList.appendChild(eventItem);
+            });
+        }
+    } catch (err) {
+        console.error('Error fetching events:', err);
+        document.getElementById('upcoming-events').innerHTML = '<li>Unable to load events. Please try again later.</li>';
+    }
+}
+
+        
+    </script>
+</body>
+</html>
